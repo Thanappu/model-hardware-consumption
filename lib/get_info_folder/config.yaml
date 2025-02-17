@@ -1,0 +1,2 @@
+model_test_path: /Volumes/pond/model_evaluate/models/vlms
+labels_test: /Volumes/pond/model_evaluate/image_dataset/office_classification/test

@@ -1,0 +1,5 @@
+name: vit-gpt2-image-captioning
+reference: https://huggingface.co/nlpconnect/vit-gpt2-image-captioning
+model_path: /Volumes/pond/model_evaluate/models/vlms/vit-gpt2-image-captioning
+return_tensors: pt
+skip_special_tokens: true

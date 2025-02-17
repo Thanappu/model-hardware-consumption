@@ -1,0 +1,6 @@
+name: deberta-v3-large-zeroshot-v2.0
+reference: https://huggingface.co/MoritzLaurer/deberta-v3-large-zeroshot-v2.0
+model_path: /Users/thanapoompumee/Documents/project/model/zeroShotClassification/deberta-v3-large-zeroshot-v2.0
+Category: ["Risk accident", "Normal situation"]
+hypothesis_template: "This text is about"
+decision_ratio: 0.5 #compare between 2 class
