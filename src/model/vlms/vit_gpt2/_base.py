@@ -6,7 +6,7 @@ import sys
 from os.path import join as pjoin
 from transformers import VisionEncoderDecoderModel, ViTImageProcessor, AutoTokenizer
 import torch
-
+from PIL import Image
 print(dir(yaml))
 
 def checkSysPathAndAppend(path, stepBack=0):
@@ -29,7 +29,7 @@ FOLDER_CONFIG = os.path.join(FOLDER_PROJECT, 'config')
 PATH_CONFIG = pjoin(FOLDER_PROJECT,"src","model","vlms","vit_gpt2","config.yaml")
 
 # sys.path.append(folderFile)
-class VlmsBlipBase:
+class VlmsVit:
     def __init__(self):
         self.model = None
         self.processor = None
@@ -92,23 +92,25 @@ class VlmsBlipBase:
     def __preprocessing(self):
         self.w_img = self.img.shape[1]
         self.h_img = self.img.shape[0]
-        # buff_img = cv2.resize(self.img)
         buff_img = cv2.cvtColor(self.img,cv2.COLOR_BGR2RGB)
+        buff_img = Image.fromarray(buff_img)
         self.img_processed = buff_img
         self.reinit_model()
 
     def __inference(self, run_async=False):
         print('inferencing...')
-        inputs = self.processor(self.img_processed, return_tensors=self.package_info['return_tensors'], size=224).pixel_value
-        attention_mask = torch.ones(inputs.shape[:2], dtype=torch.long)
-        out = self.model.generate(inputs, attention_mask=attention_mask, **self.gen_kwargs)
+        inputs = self.processor(self.img_processed, return_tensors="pt", size=224)
+        pixel_values = inputs["pixel_values"]
+        attention_mask = torch.ones(pixel_values.shape[:2], dtype=torch.long)
+        out = self.model.generate(pixel_values, attention_mask=attention_mask,
+                                  **self.gen_kwargs)
         preds = self.tokenizer.batch_decode(out, skip_special_tokens=True)
-        preds = [pred.strip() for pred in preds]
-        caption = preds
+        caption = [pred.strip() for pred in preds]
+
         self.results = {
             "input": inputs,
-            "out" : out,
-            "caption" : caption
+            "out": out,
+            "caption": caption[0] if caption else ""
         }
 
     def __postprocessing(self):
