@@ -94,12 +94,17 @@ class ZeroshotDebertaLarge:
         self.results_post['Result'] = self.results['respond']
         self.results_post['Labels'] = self.results['labels']
         self.results_post['Scores'] = self.results['scores']
-        if self.results_post['Scores'][0] > self.package_info['decision_ratio']:
-            self.results_post['Output'] = self.results_post['Labels'][0]
-            self.results_post['Output_score'] = self.results_post['Scores'][0]
-        else:
-            self.results_post['Output'] = self.results_post['Labels'][1]
-            self.results_post['Output_score'] = self.results_post['Scores'][1]
+
+        max_index = self.results_post['Scores'].index(max(self.results_post['Scores']))
+        self.results_post['Output'] = self.results_post['Labels'][max_index]
+        self.results_post['Output_score'] = self.results_post['Scores'][max_index]
+
+        # if self.results_post['Scores'][0] > self.package_info['decision_ratio']:
+        #     self.results_post['Output'] = self.results_post['Labels'][0]
+        #     self.results_post['Output_score'] = self.results_post['Scores'][0]
+        # else:
+        #     self.results_post['Output'] = self.results_post['Labels'][1]
+        #     self.results_post['Output_score'] = self.results_post['Scores'][1]
 
 
     def predict(self, text_input, preprocess=None, run_async=False):

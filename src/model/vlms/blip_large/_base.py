@@ -47,7 +47,7 @@ class VlmsBlipLarge:
 
     def __init_model(self):
         print("loading model...")
-
+        self.name = self.package_info['name']
         blip_path = pjoin(FOLDER_PROJECT,"models",self.package_info['model_path'])
         self.processor = BlipProcessor.from_pretrained(blip_path)
         self.model = BlipForConditionalGeneration.from_pretrained(blip_path)

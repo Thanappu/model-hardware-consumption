@@ -24,7 +24,7 @@ def checkSysPathAndAppend(path, stepBack=0):
 folderFile, filename = os.path.split(os.path.realpath(__file__))
 FOLDER_PROJECT = checkSysPathAndAppend(folderFile, 4)
 FOLDER_CONFIG = os.path.join(FOLDER_PROJECT, 'config')
-PATH_CONFIG = pjoin(FOLDER_PROJECT,"src","model","vlms","blip_large","config.yaml")
+PATH_CONFIG = pjoin(folderFile,"config.yaml")
 
 # sys.path.append(folderFile)
 class VlmsBlipBase:
@@ -47,7 +47,7 @@ class VlmsBlipBase:
 
     def __init_model(self):
         print("loading model...")
-
+        self.name = self.package_info['name']
         blip_path = self.package_info['model_path']
         self.processor = BlipProcessor.from_pretrained(blip_path)
         self.model = BlipForConditionalGeneration.from_pretrained(blip_path)

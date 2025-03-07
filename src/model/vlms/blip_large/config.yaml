@@ -1,6 +1,5 @@
-name: blip-image-captioning-base
-reference: https://huggingface.co/Salesforce/blip-image-captioning-base
-#model_path: /Volumes/pond/model_evaluate/models/vlms/blip-image-captioning-large
-model_path: /Users/thanapoompumee/Documents/project/model/used_model/blip-image-captioning-large
+name: blip-image-captioning-large
+reference: https://huggingface.co/Salesforce/blip-image-captioning-large
+model_path: /Volumes/pond/model_evaluate/models/vlms/blip-image-captioning-large
 return_tensors: pt
 skip_special_tokens: true

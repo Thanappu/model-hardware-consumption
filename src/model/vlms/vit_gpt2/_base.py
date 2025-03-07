@@ -51,6 +51,7 @@ class VlmsVit:
 
     def __init_model(self):
         print("loading model...")
+        self.name = self.package_info['name']
         vit_path = self.package_info['model_path']
         self.processor =  ViTImageProcessor.from_pretrained(vit_path)
         self.model = VisionEncoderDecoderModel.from_pretrained(vit_path)
